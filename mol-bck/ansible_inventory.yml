@@ -1,0 +1,11 @@
+# Molecule managed
+
+---
+all:
+  hosts:
+    ansible-minio-server: &id001
+      ansible_connection: docker
+ungrouped:
+  hosts:
+    ansible-minio-server: *id001
+  vars: {}

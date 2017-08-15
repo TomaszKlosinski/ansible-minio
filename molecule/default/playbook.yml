@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: Install packages required for testing Ansible roles
+      package: name=iproute state=installed
+  roles:
+    - role: ansible-minio
