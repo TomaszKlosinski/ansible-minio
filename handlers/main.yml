@@ -1,2 +1,7 @@
 ---
-# handlers file for foo
+
+- name: Restart minio
+  systemd:
+    name: minio
+    state: restarted
+    daemon_reload: True
