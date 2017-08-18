@@ -6,7 +6,9 @@
       get_url:
         url: https://dl.minio.io/server/minio/release/linux-amd64/minio
         dest: "{{ minio_server_bin_path }}"
-        mode: "0644"
+        mode: "0755"
+        owner: "{{ minio_user }}"
+        group: "{{ minio_group }}"
 
     - name: Create systemd service unit file for minio
       template:
@@ -17,10 +19,15 @@
         group: root
       notify: Restart minio
 
-    - name: Create default environment variables file for minio
+    - name: Create directory for minio systemd unit configuration files
+      file:
+        state: directory
+        path: /etc/systemd/system/minio.service.d
+
+    - name: Create environment variables config for minio systemd unit file
       template:
-        src: minio.j2
-        dest: /etc/default/minio
+        src: minio.conf.j2
+        dest: /etc/systemd/system/minio.service.d/minio.conf
         mode: "0644"
         owner: root
         group: root
