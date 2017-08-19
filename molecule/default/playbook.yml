@@ -2,8 +2,11 @@
 - name: Converge
   hosts: all
   # If you need Ansible network facts uncomment this:
-  # pre_tasks:
-  #   - name: Install packages required for testing Ansible roles
-  #     package: name=iproute state=installed
+  pre_tasks:
+    - name: Install packages required for testing Ansible roles
+      package: name="{{ item }}" state=installed
+      with_items:
+        - iproute
+        - net-tools
   roles:
     - role: ansible-minio
