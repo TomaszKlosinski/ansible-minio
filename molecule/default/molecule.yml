@@ -8,7 +8,7 @@ lint:
 platforms:
   - name: ansible-minio
     image: centos:latest
-    ansible_groups:
+    groups:
       - minio
     port_bindings: { 9000: 9000 }
     privileged: True

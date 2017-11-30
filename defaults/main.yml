@@ -12,15 +12,15 @@ minio_group: "root"
 minio_server_port: "9091"
 
 # Minio server data directories
-minio_server_datadirs: [ ]
+minio_volumes: [ ]
 
 # Additional minio server CLI options
-minio_server_opts: ""
+minio_start_options:
+  - "--address :{{ minio_server_port }}'"
 
 # Minio access and secret keys
 minio_access_key: ""
 minio_secret_key: ""
 
-# Switches to disable minio server and/or minio client installation
-skip_server: False
-skip_client: False
+# Minio cluster hosts (by default group 'minio' in the Ansible inventory)
+minio_cluster_hosts: "{{ groups['minio'] | default([]) }}"

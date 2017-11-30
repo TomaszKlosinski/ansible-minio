@@ -1,5 +1,11 @@
 [Service]
 # Local export path.
-Environment="MINIO_VOLUMES=/tmp/"
-# # Use if you want to run Minio on a custom port.
-# #Environment="MINIO_OPTS='\-\-address :9199'"
+{% if minio_cluster_hosts | default([]) %}
+Environment="MINIO_VOLUMES="{% for host in minio_cluster_hosts %}{{ hostvars[host].minio_volumes | join(hostvars[host].ansible_default_ipv4.address + ' ') }}{% if not loop.last %} \{% endif %}{% endfor %}"
+
+
+{% else %}
+Environment="MINIO_VOLUMES={{ minio_volumes | join(' ') }}"
+{% endif %}
+# Use if you want to run Minio on a custom port.
+# Environment="MINIO_OPTS='{{ minio_start_options | join(' ') }}"

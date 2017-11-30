@@ -1,0 +1,14 @@
+---
+- name: Converge
+  hosts: minio
+  pre_tasks:
+    - name: Install packages required for testing Ansible roles
+      package: name="{{ item }}" state=installed
+      with_items:
+        - iproute # installs 'ip' command to get Ansible network facts
+        - net-tools # installs 'netstat' command to make Molecule socket tests work
+  roles:
+    - role: ansible-minio
+  vars:
+    minio_volumes:
+      - "/tmp"

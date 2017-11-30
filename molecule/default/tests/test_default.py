@@ -8,7 +8,6 @@ import testinfra.utils.ansible_runner
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
-
 @pytest.fixture()
 def AnsibleDefaults(Ansible):
     with open("../../defaults/main.yml", 'r') as stream:
@@ -46,3 +45,5 @@ def test_minio_service_listening(Socket, socket_address):
 
     socket = Socket(socket_address)
     assert socket.is_listening
+
+
